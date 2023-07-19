@@ -60,11 +60,49 @@ export default function Chat() {
       { uploading ? <Spinner /> : ""
       }   
       <div className="border-[1px] border-black bottom-0 right-0 max-h-[650px] md:w-[480px] bg-white grid content-between" style={{ minHeight: "calc(80vh - 72px)" }}>
-      <div className="border-2 h-[80px] w-full flex justify-center align-center text-white bg-blue-600 align-center"><div className="align-center text-[45px]">Ajaffee Va</div></div>
+      <div className="border-2 h-[80px] w-full flex justify-center align-center text-white bg-blue-600 align-center">
+        <div className="align-center text-[45px]">Ajaffee Va</div></div>
         
         <div className="overflow-scroll overflow-x-hidden max-h-[600px] h-[470px]">{messages.map((data,key)=>
-        key%2===0?<div className="flex mt-2 justify-end mr-2 gap-2"><span className="break-words bg-blue-500 px-3 py-3 max-w-[350px] rounded-3xl text-white">{data}</span><img className=" h-12 w-12 rounded-full" src={myImage1} alt="" /></div>:<div className="ml-2 mt-2 gap-2 flex justify-start"><img className="h-12 w-12 rounded-full" src={myImage} alt="" /><span className="max-w-[350px] break-words bg-gray-200 px-3 py-3 rounded-3xl">{res[key-1]}</span></div>
-        )};</div>
+        key%2===0?<div className="flex mt-2 justify-end mr-2 gap-2">
+          <span className="break-words bg-blue-500 px-3 py-3 max-w-[350px] rounded-3xl text-white">{data}</span>
+          <img className=" h-12 w-12 rounded-full" src={myImage1} alt="" />
+          </div>:
+      <div className="ml-2 mt-2 gap-2 flex justify-start">
+        
+        <img className="h-12 w-12 rounded-full" src={myImage} alt="" />
+        
+        <div className="overflow-scroll overflow-x-hidden max-h-[600px] h-[470px]">
+        
+        {res.map((itemData, index) => (
+          <div key={index} className="max-w-[350px] break-words bg-gray-200 px-3 py-3 rounded-3xl my-2">
+            {itemData.split(/\n/).map((line, idx) => (
+              <div key={idx}>
+                {line.trim() && (
+                  <>
+                    {line.endsWith("Price") ? (
+                      <strong>{line}</strong>
+                    ) : (
+                      line
+                    )}
+                  </>
+                )}
+                <br />
+              </div>
+            ))}
+
+          </div>
+        ))}
+      </div>
+
+      
+
+      </div>
+      )};
+    </div>
+
+
+
         <div className="relative w-full justify-between">
           <div className="w-full justify-between grid pb-4" style={{ placeContent: "center" }}>
             <CommandInput onCommandSubmit={handleCommandSubmit} messages={messages}/>
